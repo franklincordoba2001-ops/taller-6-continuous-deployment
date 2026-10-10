@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+*.log
+.env
+.venv/
+env/
+venv/
+Taller_6_copy.docx
+taller_6_content.txt
+Taller_3.docx.txt
+Taller_4.docx.txt
+entregar_informe_yml.docx.txt
+informe_ci.docx.txt
+evidencia_git.docx.txt
