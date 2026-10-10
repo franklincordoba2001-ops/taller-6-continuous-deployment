@@ -1,0 +1,14 @@
+# Configuración de Ruff para el proyecto Taller 6
+line-length = 120
+target-version = "py311"
+
+[lint]
+select = ["E", "F"]
+ignore = ["E501", "W293", "W291"]  # Permitir líneas largas y espacios cosméticos
+exclude = [
+    ".git",
+    "__pycache__",
+    ".pytest_cache",
+    ".ruff_cache",
+    "build_docx_report.py"  # Script utilitario de generación de documentos
+]

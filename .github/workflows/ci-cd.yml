@@ -31,7 +31,7 @@ jobs:
 
       - name: Run Ruff Linter
         run: |
-          ruff check .
+          ruff check . --config ruff.toml
 
       - name: Run Deterministic Pytest Suite
         run: |
