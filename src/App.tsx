@@ -6,6 +6,7 @@ import { ConfigCatControls } from './components/ConfigCatControls';
 import { MetricsDashboard } from './components/MetricsDashboard';
 import { RetrospectiveMiroBoard } from './components/RetrospectiveMiroBoard';
 import { CanaryPolicyCard } from './components/CanaryPolicyCard';
+import { SprintReviewBanner } from './components/SprintReviewBanner';
 
 export const App: React.FC = () => {
   const [toggleState, setToggleState] = useState<ToggleState>(featureFlagService.getState());
@@ -100,6 +101,9 @@ export const App: React.FC = () => {
       {/* Main Content Areas */}
       {activeTab === 'demo' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+          {/* Banner de Sprint Review en CD */}
+          <SprintReviewBanner />
+
           {/* Panel de ConfigCat */}
           <ConfigCatControls />
 

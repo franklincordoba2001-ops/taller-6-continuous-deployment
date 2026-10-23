@@ -75,35 +75,48 @@ export const RetrospectiveMiroBoard: React.FC = () => {
 
       {/* Tres Acciones Obligatorias */}
       <h3 style={{ fontSize: 16, color: '#f8fafc', marginBottom: 12 }}>
-        🚀 Las Tres Acciones de Mejora Obligatorias (Asignadas)
+        🚀 Las Tres Acciones Concretas de Mejora Inmediata
       </h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 14, marginBottom: 20 }}>
         <div style={{ background: 'rgba(0, 102, 204, 0.08)', border: '1px solid rgba(0, 102, 204, 0.25)', borderRadius: 10, padding: 14 }}>
-          <span className="badge badge-blue">Acción 1: Estabilidad de Pipeline</span>
-          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Cuarentena & Auto-Rollback</h4>
+          <span className="badge badge-blue">Acción 1 (Máxima Prioridad)</span>
+          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Arreglar el Test Flaky en &lt; 24h</h4>
           <p style={{ fontSize: 13, color: '#94a3b8' }}>
-            Cuarentenar de inmediato el test flaky del CI y configurar auto-rollback en Render ante fallos de health check.
+            Arreglar el test flaky en las próximas 24 horas como máxima prioridad técnica para restaurar la confianza y fluidez en el pipeline de CI.
           </p>
           <div style={{ marginTop: 8, fontSize: 12, color: '#60a5fa', fontWeight: 600 }}>Responsable: Developers</div>
         </div>
 
-        <div style={{ background: 'rgba(121, 40, 202, 0.08)', border: '1px solid rgba(121, 40, 202, 0.25)', borderRadius: 10, padding: 14 }}>
-          <span className="badge badge-purple" style={{ background: 'rgba(121, 40, 202, 0.2)', color: '#c084fc' }}>Acción 2: Higiene de Toggles</span>
-          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Regla de Caducidad a 30 Días</h4>
+        <div style={{ background: 'rgba(0, 212, 178, 0.08)', border: '1px solid rgba(0, 212, 178, 0.25)', borderRadius: 10, padding: 14 }}>
+          <span className="badge badge-cyan">Acción 2: Telemetría de Pagos</span>
+          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Dashboard Mínimo de Métricas</h4>
           <p style={{ fontSize: 13, color: '#94a3b8' }}>
-            Incorporar al Definition of Done (DoD) que todo toggle con más de 30 días en producción se priorice obligatoriamente como tarea de limpieza en el backlog.
+            Crear un dashboard mínimo de métricas de pagos (tasa de errores + tasa de conversión) antes de cualquier activación externa.
+          </p>
+          <div style={{ marginTop: 8, fontSize: 12, color: 'var(--accent-cyan)', fontWeight: 600 }}>Responsable: Devs + PO</div>
+        </div>
+
+        <div style={{ background: 'rgba(121, 40, 202, 0.08)', border: '1px solid rgba(121, 40, 202, 0.25)', borderRadius: 10, padding: 14 }}>
+          <span className="badge badge-purple" style={{ background: 'rgba(121, 40, 202, 0.2)', color: '#c084fc' }}>Acción 3: Higiene de Toggles</span>
+          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Limpiar los 3 Toggles Antiguos</h4>
+          <p style={{ fontSize: 13, color: '#94a3b8' }}>
+            Limpiar o eliminar los 3 toggles antiguos (+45 días) en este mismo sprint, removiendo deuda técnica y código condicional obsoleto.
           </p>
           <div style={{ marginTop: 8, fontSize: 12, color: '#c084fc', fontWeight: 600 }}>Responsable: Equipo / PO</div>
         </div>
+      </div>
 
-        <div style={{ background: 'rgba(0, 212, 178, 0.08)', border: '1px solid rgba(0, 212, 178, 0.25)', borderRadius: 10, padding: 14 }}>
-          <span className="badge badge-cyan">Acción 3: DoR de Liberación</span>
-          <h4 style={{ fontSize: 14, margin: '8px 0 4px', color: '#fff' }}>Observabilidad Obligatoria</h4>
-          <p style={{ fontSize: 13, color: '#94a3b8' }}>
-            Definir como criterio en el Definition of Ready (DoR) que ninguna funcionalidad se active a usuarios externos sin dashboards activos de errores HTTP 5xx y latencia.
-          </p>
-          <div style={{ marginTop: 8, fontSize: 12, color: 'var(--accent-cyan)', fontWeight: 600 }}>Responsable: PO + Devs</div>
+      {/* Acuerdo de Equipo Vinculante */}
+      <div style={{ background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.08))', border: '1px solid rgba(245, 158, 11, 0.35)', borderRadius: 12, padding: 16 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+          <span style={{ fontSize: 20 }}>🤝</span>
+          <span style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: 0.8, color: '#fbbf24', fontWeight: 700 }}>
+            Acuerdo Vinculante de Retrospectiva:
+          </span>
         </div>
+        <p style={{ fontSize: 14, color: '#fef3c7', fontWeight: 600, lineHeight: 1.5, margin: 0 }}>
+          “No se activará ningún toggle nuevo a usuarios reales hasta que el health check no haya fallado en los últimos 7 deploys.”
+        </p>
       </div>
     </div>
   );

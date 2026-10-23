@@ -44,18 +44,18 @@ flowchart TD
 ```
 
 ### 3.1 El Nuevo Sprint Review en CD
-* **Objetivo:** Demostración de valor tangible y funcional en producción (Render), contrastando hipótesis de negocio y estado de activación.
+* **Objetivo:** Demostración de valor tangible y funcional en producción (Render), contrastando hipótesis de negocio y estado de activación sin comprometer fechas prematuras.
 * **Duración Máxima:** 45 minutos.
 * **Diferencia Fundamental con el Review Clásico:**
   * **Review Clásico:** Demostración de un incremento "todo o nada" en un entorno local o de staging aislado, con feedback diferido al final del sprint.
-  * **Review en CD + TBD:** Demostración de lo que ya está en producción, protegido o liberado mediante Feature Flags, evaluando telemetría real y métricas de adopción.
+  * **Review en CD + TBD:** Demostración de lo que ya reside en producción real, desacoplado mediante Feature Flags (ConfigCat), evaluando telemetría y métricas de negocio.
 
-#### Estructura Obligatoria de la Demo (Máximo 5 min por ítem):
-1. **¿Qué problema de usuario resuelve?** (Contexto del Pain Point).
-2. **¿Estado de activación?** (100% público, detrás de Toggle, o en Canary interno).
-3. **Demo en Vivo en Producción:** Ejecución del flujo con Toggle OFF vs. Toggle ON y prueba de fallback.
-4. **Métrica o Evidencia de Valor:** Observabilidad en tiempo real (ej. tasa de error < 0.5%, latencia, tasa de conversión).
-5. **Pregunta Clave al PO / Stakeholder:** *“¿Esto genera el valor esperado por los usuarios según las métricas observadas?”*
+#### Protocolo Oficial de la Demo en Vivo:
+1. **Demo con Toggle en OFF primero (Estado Real Actual):** Se proyecta la aplicación en Render mostrando la pasarela estándar (*"Completar formulario y Pagar"*), demostrando que la rama `main` en producción no genera alteración ni riesgo alguno a los usuarios reales.
+2. **Activación Temporal Restringida:** Se conmuta el toggle temporalmente **solo para el equipo (o un usuario de prueba)** y se muestra el nuevo flujo de *"Pagos Express en 1 Clic"*.
+3. **Comunicación Transparente del PO (Speech Oficial):**
+   > *“La funcionalidad está técnicamente lista y desplegada, pero todavía no la hemos liberado a usuarios reales porque necesitamos definir métricas de observación y resolver riesgos de estabilidad del pipeline. La campaña de marketing se pausará o se ajustará.”*
+4. **Gestión de Expectativas:** Se **evita comprometer una fecha de activación al 20% en el Review**, supeditando cualquier liberación a la satisfacción de los acuerdos técnicos y de telemetría.
 
 ---
 
@@ -67,41 +67,40 @@ flowchart TD
   3. **Flujo de Valor:** Lead Time for Changes (tiempo desde el primer commit hasta producción) y verificación de si el valor llegó realmente a los usuarios finales.
 
 #### Dinámica del Tablero (Miro):
-* 🟢 **Verde (Lo que funcionó bien):** Automatización eficiente, auto-deploys estables, visibilidad de logs.
-* 🟡 **Amarillo (Fricciones):** Demoras en code reviews, confusión entre deploy y release, falta de alertas automáticas.
-* 🔴 **Rojo (Lo que rompió el flujo o causó miedo):** Tests flaky bloqueando CI, healthchecks colgados por 11 minutos, presión de marketing para activar código sin métricas.
-* 🚀 **Acciones de Mejora (Regla: Máximo 3 acciones):** Acciones concretas, medibles, con responsable asignado y Definition of Done.
+* 🟢 **Verde (Lo que funcionó bien):** Automatización eficiente, auto-deploys estables a Render, desacople entre deploy y release vía ConfigCat.
+* 🟡 **Amarillo (Fricciones):** Tests flaky en CI que demoraron integraciones, presión comercial del PO por activar en viernes sin observabilidad, solo 4 integraciones en el sprint.
+* 🔴 **Rojo (Lo que rompió el flujo o causó miedo):** Caída de 11 minutos por healthcheck fallido, rollback manual no automatizado, acumulación de 3 toggles obsoletos (+45 días).
+
+#### Las 3 Acciones Concretas de Mejora (Asignadas):
+1. **Acción 1: Arreglar el test flaky en las próximas 24 h (Máxima Prioridad).**  
+   *Responsable:* Developers. Aislar, refactorizar o mockear de inmediato el test intermitente que bloqueó el CI por 4 días.
+2. **Acción 2: Crear un dashboard mínimo de métricas de pagos (errores + conversión) antes de cualquier activación.**  
+   *Responsable:* Devs + PO. Implementar telemetría en tiempo real sobre errores HTTP 5xx/pasarela y tasa de conversión antes de liberar tráfico externo.
+3. **Acción 3: Limpiar o eliminar los 3 toggles antiguos en este mismo sprint.**  
+   *Responsable:* Equipo / PO. Erradicar del código base los 3 feature toggles con más de 45 días de vida para pagar la deuda técnica acumulada.
+
+#### Acuerdo de Equipo Vinculante:
+> 🤝 **Acuerdo de Equipo:**  
+> **No se activará ningún toggle nuevo a usuarios reales hasta que el health check no haya fallado en los últimos 7 deploys.**
 
 ---
 
-## 🎛️ 4. Política Oficial de Liberación Segura y Gobernanza de Feature Toggles
+## 🎛️ 4. Política Oficial de Liberación Segura (Decisión Final)
 
-### 4.1 Ciclo de Vida del Feature Toggle (Límite Máximo: 30 Días)
-```mermaid
-stateDiagram-v2
-    [*] --> Creacion: Sliceado en main (Default OFF)
-    Creacion --> CanaryInterno: Validación empleados (@empresa.com)
-    CanaryInterno --> CanaryPorcentual: 5% a 20% usuarios reales
-    CanaryPorcentual --> ProduccionTotal: 100% GA verificado
-    ProduccionTotal --> Limpieza: Remoción de if/else y flag en ConfigCat
-    Limpieza --> [*]: Código Limpio sin Deuda
-```
+### 4.1 Evaluación: ¿Activar al 20% el Viernes?
+* **Decisión Final:** **NO SE ACTIVA EL 20% ESTE VIERNES.**
+* **Justificación Técnica:** Incumple ventanas seguras (no liberar antes del fin de semana sin guardia técnica activa); antecedente reciente de fallo de 11 minutos en health check; persisten tests flaky en CI; y falta telemetría básica de pagos.
 
-1. **Fase 0 - Creación:** El código se integra a `main` protegido por flag (default en `False`).
-2. **Fase 1 - Canary Interno (Alpha):** Se habilita exclusivamente para usuarios corporativos mediante whitelisting de email (`@empresa.com` o ID interno).
-3. **Fase 2 - Canary Progresivo (Beta):** Liberación al 5% durante 2 horas. Si los Golden Signals están saludables, escalar al 20% para satisfacer hitos comerciales.
-4. **Fase 3 - Disponibilidad General (GA):** Expansión al 50% y finalmente al 100% tras 24 horas de estabilidad.
-5. **Fase 4 - Retiro Obligatorio (Cleanup):** Ningún toggle de liberación puede permanecer en el código más de **30 días**. Si supera los 45 días, se considera deuda técnica crítica y se bloquea el sprint planning hasta su erradicación.
+### 4.2 Plan Acordado de Liberación Progresiva (5 Pasos)
+1. **Paso 1:** Resolver test flaky + limpiar toggles viejos (esta semana).
+2. **Paso 2:** Implementar métricas básicas de error y conversión (máximo 3 días).
+3. **Paso 3:** Activar primero solo para usuarios internos / equipo (1-2 días de observación).
+4. **Paso 4:** Si todo está estable → subir al 5% → 20% con observación de 48 h en cada paso.
+5. **Paso 5:** Criterio de rollback automático: **cualquier aumento > 0,5% en errores de pago** desactiva inmediatamente el toggle en ConfigCat.
 
-### 4.2 Métricas de Observabilidad Previas a la Activación (Golden Signals)
-Antes de activar cualquier toggle en producción, el servicio debe exponer y monitorizar:
-* **Tasa de Error (Error Rate):** Umbral aceptable < 0.5%.
-* **Latencia p95:** Umbral aceptable < 800 ms.
-* **Tasa de Conversión de Negocio:** Comparación de éxito entre flujo tradicional y nuevo flujo.
-
-### 4.3 Protocolo de Rollback Inmediato (Kill-Switch)
-* Si en los primeros 15 minutos tras encender el toggle el Error Rate supera el **1.5%** o la latencia excede **1.5 segundos**, el PO o el Dev de guardia tiene la potestad de **apagar el toggle a 0% en ConfigCat inmediatamente**.
-* **Tiempo Máximo de Mitigación:** Menos de 60 segundos (sin necesidad de redeploy ni rollback de imagen).
+### 4.3 Resumen de la Decisión Madura
+> 💡 **Resumen:**  
+> **Se protege la confianza del pipeline y la disciplina TBD por encima de la presión comercial de corto plazo. Se comunica con transparencia al stakeholder y se define un camino claro y seguro de liberación.**
 
 ---
 

@@ -2,6 +2,7 @@
 Generador del Documento Oficial Word (.docx) para el Taller 6.
 Diseñado con formato institucional de alta calidad para UNIPUTUMAYO.
 Stack: React 18, Vite, TypeScript, ConfigCat SDK, Render.
+Solución Oficial del Caso Pagos Express, Sprint Review, Retrospective y Liberación Segura.
 """
 
 import docx
@@ -116,7 +117,8 @@ def main():
     r_sub = p_sub.add_run(
         "Servicio de Feature Flags: ConfigCat\n"
         "Stack Tecnológico: React 18, Vite, TypeScript, ConfigCat SDK, Render\n"
-        "Caso Técnico: 'Pagos Express en Liquidación de Trámites Catastrales'"
+        "Caso Técnico: 'Pagos Express en Liquidación de Trámites Catastrales'\n"
+        "Repositorio: https://github.com/franklincordoba2001-ops/taller-6-continuous-deployment"
     )
     r_sub.font.name = "Arial"
     r_sub.font.size = Pt(10.5)
@@ -142,16 +144,17 @@ def main():
     # ========================== SECCIÓN 1 ==========================
     doc.add_heading("1. INTRODUCCIÓN Y OBJETIVO", level=1)
     p1 = doc.add_paragraph(
-        "El presente informe documenta la adaptación práctica de las ceremonias ágiles de Scrum (Sprint Review y Sprint Retrospective) "
-        "al modelo de Continuous Deployment (CD) y Trunk-Based Development (TBD), resolviendo el caso técnico de 'Pagos Express' mediante "
-        "el desacople entre despliegue y liberación con Feature Flags y una estrategia de liberación controlada."
+        "El presente informe documenta la resolución técnica y metodológica del caso de estudio de 'Pagos Express' en el marco "
+        "del Taller 6: Continuous Deployment, Sprint Review & Retrospective. El objetivo central es adaptar las ceremonias de Scrum "
+        "(Sprint Review y Sprint Retrospective) y las políticas de liberación a un modelo maduro de Continuous Deployment (CD) "
+        "y Trunk-Based Development (TBD), desacoplando el despliegue técnico a Render de la liberación al usuario final mediante Feature Toggles en ConfigCat."
     )
     p1.paragraph_format.space_after = Pt(12)
 
     # ========================== SECCIÓN 2 ==========================
-    doc.add_heading("2. ADAPTACIÓN DEL SPRINT REVIEW A CONTINUOUS DEPLOYMENT", level=1)
+    doc.add_heading("2. EN EL SPRINT REVIEW", level=1)
     
-    doc.add_heading("2.1 Principios Comparativos", level=2)
+    doc.add_heading("2.1 Principios Comparativos: Review Clásico vs. Review en Continuous Deployment", level=2)
     doc.add_paragraph(
         "• Review Clásico: Demostración de un incremento acumulado al final de una iteración de dos semanas; enfoque de 'todo o nada' "
         "habitualmente presentado en local o staging; feedback tardío centrado en 'qué construimos'.\n\n"
@@ -159,40 +162,39 @@ def main():
         "están desacopladas mediante Feature Toggles (ConfigCat), permitiendo validación empírica y feedback continuo centrado en 'qué valor e impacto recibieron los usuarios'."
     )
 
-    doc.add_heading("2.2 Ficha Técnica de Demostración (Caso: Pagos Express)", level=2)
+    doc.add_heading("2.2 Protocolo de Demostración y Comunicación en el Review (Caso: Pagos Express)", level=2)
     doc.add_paragraph(
-        "• Problema Resuelto: Elimina la fricción y abandono en la liquidación de trámites catastrales mediante un checkout rápido de 1 clic "
-        "con firma digital autorizada, evitando formularios bancarios repetitivos.\n\n"
-        "• Estado en Producción: Código integrado a la rama main y desplegado en Render, aislado detrás del flag pagos-express-v1 (en estado OFF).\n\n"
-        "• Flujo de la Demo en Vivo:\n"
-        "  1. Estado OFF: Se proyecta la aplicación en Render mostrando la pasarela estándar ('Completar formulario y Pagar') con el flag inactivo.\n"
-        "  2. Conmutación: Se conmuta el toggle pagos-express-v1 a ON en la consola de ConfigCat y se publica el cambio.\n"
-        "  3. Estado ON: Sin requerir nuevo commit, compilación ni redespliegue, la interfaz actualiza dinámicamente el componente a 'Pagar en 1 Clic con Pagos Express'.\n\n"
-        "• Métricas de Éxito: Reducción del tiempo de liquidación (de 3 minutos a menos de 10 segundos), tasa de conversión en pasarela y tasa de error técnico inferior al 0.5%.\n\n"
-        "• Pregunta de Validación al PO/Stakeholders: “¿La confirmación en un clic resuelve la necesidad del ciudadano antes de abrir el tráfico al 100%?”"
+        "1. Demo con el toggle en OFF primero (estado real actual):\n"
+        "   Se proyecta la aplicación directamente en Render mostrando la experiencia real y actual de los usuarios (formulario estándar de liquidación), "
+        "demostrando que el código ya reside en la rama main y en producción sin alterar el comportamiento de los ciudadanos ni generar riesgo alguno.\n\n"
+        "2. Activación temporal restringida:\n"
+        "   Luego se activa temporalmente solo para el equipo (o un usuario de prueba) y se muestra el flujo de 'Pagar en 1 Clic con Pagos Express', "
+        "demostrando la conmutación instantánea del componente sin requerir nuevos commits, compilaciones ni redespliegues.\n\n"
+        "3. Gestión rigurosa de expectativas:\n"
+        "   Se evita comprometer una fecha de activación al 20% en el Review, condicionando la liberación a métricas y estabilidad demostrada."
+    )
+
+    add_callout(
+        doc,
+        "“La funcionalidad está técnicamente lista y desplegada, pero todavía no la hemos liberado a usuarios reales porque necesitamos "
+        "definir métricas de observación y resolver riesgos de estabilidad del pipeline. La campaña de marketing se pausará o se ajustará.”",
+        title="DECLARACIÓN TRANSPARENTE DEL PRODUCT OWNER (PO)",
+        border_color="0066CC",
+        bg_color="F0F7FF"
     )
 
     # ========================== SECCIÓN 3 ==========================
-    doc.add_heading("3. ADAPTACIÓN DE LA SPRINT RETROSPECTIVE", level=1)
+    doc.add_heading("3. EN LA SPRINT RETROSPECTIVE (ACCIONES CONCRETAS)", level=1)
     
-    doc.add_heading("3.1 Nuevos Focos de Inspección Obligatoria", level=2)
+    doc.add_heading("3.1 Nuevos Focos de Inspección Obligatoria en CD", level=2)
     doc.add_paragraph(
         "En Continuous Deployment, la Retrospectiva deja de ser una dinámica abstracta y analiza métricas técnicas de flujo:\n"
         "• Salud del Pipeline: Tasa de builds rotos, tiempos de auto-deploy, estabilidad de health checks y presencia de rollbacks.\n"
         "• Disciplina TBD: Integraciones diarias a main, tiempo de vida de ramas (< 24 horas) e higiene/retiro de feature flags.\n"
-        "• Flujo de Valor: Lead Time for Changes y tiempo efectivo en que el usuario recibe valor."
+        "• Flujo de Valor: Lead Time for Changes y tiempo efectivo en que el usuario recibe valor con observabilidad activa."
     )
 
-    doc.add_heading("3.2 Diagnóstico del Caso (Sprint Retrospective)", level=2)
-    doc.add_paragraph(
-        "• Salud del Pipeline: Se presentó un fallo de health check por 11 minutos durante el último deploy automático que requirió rollback manual; "
-        "existencia de tests intermitentes (flaky tests) en el CI.\n"
-        "• Disciplina TBD: Se redujo el ritmo a solo 4 integraciones en el sprint; una rama permaneció abierta 4 días para sortear el test flaky del CI.\n"
-        "• Higiene de Toggles: Existen 3 feature toggles con más de 45 días de vida sin retirar del código base.\n"
-        "• Flujo de Valor: Presión comercial por activar el toggle al 20% en viernes sin instrumentar métricas de error de pasarela ni conversión."
-    )
-
-    doc.add_heading("3.3 Matriz de Retrospectiva (Estructura Miro)", level=2)
+    doc.add_heading("3.2 Matriz de Retrospectiva (Estructura Miro)", level=2)
     tbl_retro = doc.add_table(rows=1, cols=3)
     tbl_retro.alignment = WD_TABLE_ALIGNMENT.CENTER
     col_w_retro = [2.1, 2.2, 2.2]
@@ -204,50 +206,75 @@ def main():
     style_header(tbl_retro.rows[0], col_w_retro, bg_color="0A2540")
 
     r_row = tbl_retro.add_row()
-    r_row.cells[0].text = "• Despliegue automático a Render cumpliendo DoD técnico.\n• Aislamiento efectivo de código sin riesgo al usuario final mediante pagos-express-v1 en ConfigCat."
-    r_row.cells[1].text = "• Tests flaky en CI que demoraron integraciones.\n• Presión comercial del PO por activar en viernes sin observabilidad.\n• Solo 4 integraciones en el sprint."
-    r_row.cells[2].text = "• Caída de 11 minutos por health check fallido.\n• Rollback manual no automatizado.\n• Acumulación de 3 toggles obsoletos (+45 días)."
+    r_row.cells[0].text = "• Despliegue automático a Render cumpliendo DoD técnico.\n• Aislamiento efectivo de código sin riesgo al usuario final mediante pagos-express-v1 en ConfigCat.\n• Separación de deploy y release."
+    r_row.cells[1].text = "• Tests flaky en CI que demoraron integraciones.\n• Presión comercial del PO / Marketing por activar en viernes sin observabilidad.\n• Solo 4 integraciones en el sprint."
+    r_row.cells[2].text = "• Caída de 11 minutos por health check fallido en el último deploy.\n• Rollback manual no automatizado ante fallo de servicio.\n• Acumulación de 3 toggles obsoletos (+45 días)."
     style_row(r_row, col_w_retro)
 
     doc.add_paragraph().paragraph_format.space_after = Pt(10)
 
-    doc.add_heading("3.4 Tres Acciones de Mejora Obligatorias", level=2)
+    doc.add_heading("3.3 Las Tres Acciones Concretas de Mejora Inmediata", level=2)
     doc.add_paragraph(
-        "1. Acción 1 (Estabilidad de Pipeline): Cuarentenar de inmediato el test flaky del CI y configurar auto-rollback en Render ante fallos de health check. (Responsable: Developers).\n\n"
-        "2. Acción 2 (Higiene de Toggles): Incorporar al Definition of Done (DoD) que todo toggle con más de 30 días en producción se priorice obligatoriamente como tarea de limpieza en el backlog. (Responsable: Equipo / PO).\n\n"
-        "3. Acción 3 (DoR de Liberación): Definir como criterio en el Definition of Ready (DoR) que ninguna funcionalidad se active a usuarios externos sin dashboards activos de errores HTTP 5xx y latencia. (Responsable: PO + Devs)."
+        "• Acción 1: Arreglar el test flaky en las próximas 24 h (máxima prioridad).\n"
+        "  Responsable: Developers. Aislar, refactorizar o mockear de inmediato el test intermitente que bloqueó el CI por 4 días, restableciendo la confianza en las pruebas automáticas.\n\n"
+        "• Acción 2: Crear un dashboard mínimo de métricas de pagos (errores + conversión) antes de cualquier activación.\n"
+        "  Responsable: Devs + PO. Implementar telemetría en tiempo real sobre errores HTTP 5xx/pasarela y tasa de conversión antes de liberar tráfico externo.\n\n"
+        "• Acción 3: Limpiar o eliminar los 3 toggles antiguos en este mismo sprint.\n"
+        "  Responsable: Equipo / PO. Erradicar del código base los 3 feature toggles con más de 45 días de vida para pagar la deuda técnica acumulada."
+    )
+
+    add_callout(
+        doc,
+        "“No se activará ningún toggle nuevo a usuarios reales hasta que el health check no haya fallado en los últimos 7 deploys.”",
+        title="ACUERDO VINCULANTE DE EQUIPO (RETROSPECTIVA)",
+        border_color="D97706",
+        bg_color="FFFBEB"
     )
 
     # ========================== SECCIÓN 4 ==========================
-    doc.add_heading("4. POLÍTICA DE LIBERACIÓN SEGURA DE VALOR", level=1)
+    doc.add_heading("4. ESTRATEGIA DE LIBERACIÓN SEGURA (DECISIÓN FINAL)", level=1)
     
-    doc.add_heading("4.1 Evaluación: ¿Activar al 20% el viernes?", level=2)
+    doc.add_heading("4.1 Evaluación de Decisión: ¿Activar al 20% el Viernes?", level=2)
     doc.add_paragraph(
-        "• Decisión: RECHAZAR LA ACTIVACIÓN.\n"
+        "• Decisión Final: NO SE ACTIVA EL 20% ESTE VIERNES.\n"
         "• Justificación Técnica: Incumple las ventanas seguras de despliegue (no liberar antes del fin de semana sin guardia técnica activa); "
-        "existe un antecedente reciente de fallo en health check; y no existe telemetría para monitorear caídas o transacciones bancarias fallidas."
+        "existe un antecedente reciente de fallo de 11 minutos en health check durante el último deploy; persisten tests flaky en CI; y no existe telemetría previa para monitorear caídas o pagos fallidos."
     )
 
-    doc.add_heading("4.2 Estrategia de Liberación Progresiva (Canary Rollout)", level=2)
+    doc.add_heading("4.2 Plan Acordado de Liberación Progresiva (5 Pasos)", level=2)
     doc.add_paragraph(
-        "1. Fase 0 (Interno / Dogfooding - Lunes): Activación al 100% exclusivamente para correos y cuentas del equipo de desarrollo, QA y Product Owner en ConfigCat.\n"
-        "2. Fase 1 (Canary 5% - Martes): Activación para el 5% de usuarios reales en horario laboral diurno, manteniendo monitoreo activo por 24 horas.\n"
-        "3. Fase 2 (Escalado Gradual - Miércoles a Jueves): Si la tasa de transacciones fallidas permanece inferior al 0.5%, escalar progresivamente a 20%, 50% y finalmente 100%."
+        "1. Paso 1: Resolver test flaky + limpiar toggles viejos (esta semana).\n"
+        "2. Paso 2: Implementar métricas básicas de error y conversión (máximo 3 días).\n"
+        "3. Paso 3: Activar primero solo para usuarios internos / equipo (1-2 días de observación).\n"
+        "4. Paso 4: Si todo está estable → subir al 5% → 20% con observación de 48 h en cada paso.\n"
+        "5. Paso 5: Criterio de rollback automático: cualquier aumento > 0,5% en errores de pago activa de inmediato el apagado del toggle en ConfigCat en menos de 60 segundos."
     )
 
-    doc.add_heading("4.3 Protocolo de Monitoreo y Rollback Inmediato", level=2)
-    doc.add_paragraph(
-        "• Métricas bajo Observación: Tasa de errores HTTP 5xx, latencia p95 (umbral máximo 800 ms) y tasa de pagos fallidos en pasarela.\n"
-        "• Criterio de Rollback: Si los errores superan el 1% o la latencia excede el umbral, se conmuta el toggle pagos-express-v1 a OFF inmediatamente desde ConfigCat, "
-        "neutralizando el impacto en menos de 60 segundos sin necesidad de un nuevo deploy o commit."
+    add_callout(
+        doc,
+        "“Se protege la confianza del pipeline y la disciplina TBD por encima de la presión comercial de corto plazo. "
+        "Se comunica con transparencia al stakeholder y se define un camino claro y seguro de liberación.”",
+        title="RESUMEN DE LA DECISIÓN MADURA",
+        border_color="10B981",
+        bg_color="ECFDF5"
     )
 
     # ========================== SECCIÓN 5 ==========================
-    doc.add_heading("5. CONCLUSIONES Y CIERRE", level=1)
+    doc.add_heading("5. REFLEXIÓN PEDAGÓGICA Y CONCLUSIONES", level=1)
+    
+    add_callout(
+        doc,
+        "“Este caso es suficientemente difícil porque combina presión de negocio, deuda técnica, fallos recientes de pipeline, "
+        "falta de métricas y ruptura de disciplina TBD. Obliga al equipo a negociar, priorizar y aplicar todo lo aprendido en los cuatro talleres.”",
+        title="ANÁLISIS DE COMPLEJIDAD Y NEGOCIACIÓN DEL CASO",
+        border_color="7C3AED",
+        bg_color="F5F3FF"
+    )
+
     doc.add_paragraph(
-        "1. El Continuous Deployment exige desacoplar el despliegue técnico (automatizado por el pipeline hacia Render) de la liberación de valor (controlada por el Product Owner mediante ConfigCat).\n"
-        "2. El Sprint Review deja de ser una entrega de fin de ciclo para convertirse en una sesión de validación de valor e hipótesis sobre el entorno de producción real.\n"
-        "3. La Sprint Retrospective se transforma en un espacio de auditoría del pipeline, asegurando ramas cortas, pruebas estables y eliminación de deuda técnica en toggles."
+        "1. Continuous Deployment exige desacoplar el despliegue técnico (automatizado hacia Render) de la liberación de valor (controlada por el PO en ConfigCat).\n"
+        "2. El Sprint Review valida hipótesis de valor e impacto real con telemetría, no promesas de fin de ciclo.\n"
+        "3. La Sprint Retrospective audita matemáticamente la salud del pipeline y protege las 5 reglas de oro de Trunk-Based Development."
     )
 
     add_callout(
