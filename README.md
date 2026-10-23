@@ -105,6 +105,7 @@ Genera: `INFORME_TALLER_6_CONTINUOUS_DEPLOYMENT.docx` con estilos institucionale
 ├── tests/                           # Tests unitarios deterministas sin flakiness
 ├── build_docx_report.py             # Generador automatizado del informe oficial Word
 ├── INFORME_TALLER_6_CONTINUOUS_DEPLOYMENT.docx # Documento formal Word institucional
+├── README_EXPLICACION.md            # Guía completa de sustentación oral paso a paso (4 min)
 ├── SCRUM_TBD_PLAYBOOK_v3.md          # Playbook Scrum + TBD Versión 3.0
 ├── TALLER_6_INFORME_COMPLETO.md     # Informe completo en Markdown
 └── README.md                        # Documentación principal del repositorio
